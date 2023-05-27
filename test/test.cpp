@@ -4,7 +4,7 @@ int i, j = 0, gd = DETECT, gm;
 
 const int Width = 800;
 const int Height = 600;
-int g_offSet = 200;
+int g_offSet = 20;
 typedef int Radius;
 
 struct Point
@@ -27,7 +27,7 @@ Point convertPixel(A &x, A &y)
     y += Height - g_offSet;
     return {x, y};
 }
-
+/*
 void drawAxis()
 {
     for (int i = 0; i < Height; i++)
@@ -48,7 +48,7 @@ void drawAxis(int offSet)
         putpixel(i, Height - g_offSet - 20, WHITE);
     }
 }
-
+*/
 void drawPixel(double x, double y, int color)
 {
     convertPixel(x, y);
@@ -65,6 +65,7 @@ void draw_line_DDA(Point a, Point b, int color)
 
     double Xinc = dx / steps;
     double Yinc = dy / steps;
+     drawPixel(x0, y0, color);
     for (int i = 0; i < steps; i++)
     {
         drawPixel(x0, y0, color);
@@ -72,7 +73,7 @@ void draw_line_DDA(Point a, Point b, int color)
         y0 += Yinc;
     }
 }
-
+/*
 void draw_circle_Bressenham(Point c, Radius r, int col)
 {
     double d = 3 - 2 * r;
@@ -127,19 +128,20 @@ void floodFill(Point currPixel, int oldcolor, int fillColor)
     floodFill(Point(currPixel.x + 1, currPixel.y), oldcolor, fillColor);
     floodFill(Point(currPixel.x - 1, currPixel.y), oldcolor, fillColor);
 }
-
+*/
+/*
 class Car
 {
-
+ 
 public:
     int x, y;
     void DrawCar(double i)
-    {   
+    {  
+        
         draw_line_DDA({15 + i, 25}, {25 + i, 75}, RED);
         draw_line_DDA({25 + i, 75}, {35 + i, 25}, RED);
         draw_line_DDA({15 + i, 25}, {35 + i, 25}, RED);
-        
-       /* draw_line_DDA({41 + i, 40}, {41 + i, 80}, RED);
+       draw_line_DDA({41 + i, 40}, {41 + i, 80}, RED);
        // draw_line_DDA({40 + i, 40}, {40 + i, 80}, YELLOW);
         draw_line_DDA({40 + i, 40}, {80 + i, 40}, YELLOW);
         draw_circle_Bressenham({80 + 20 + i, 40}, 20, YELLOW);
@@ -150,25 +152,31 @@ public:
         draw_line_DDA({240 + i, 130}, {300 + i, 80}, YELLOW);
         draw_line_DDA({300 + i, 80}, {340 + i, 80}, YELLOW);
         draw_line_DDA({340 + i, 80}, {340 + i, 40}, YELLOW);
-        draw_line_DDA({260 + i, 40}, {340 + i, 40}, YELLOW);*/
+        draw_line_DDA({260 + i, 40}, {340 + i, 40}, YELLOW);
     }
 };
-
+*/
 int main()
 {
     initwindow(Width, Height);
+    /*
     drawAxis(200);
     drawAxis(250);
-
-    Car car;
+*/
+   // Car car;
     int xpos, ypos;
+    draw_line_DDA({15 , 25}, {55 , 100}, WHITE);
+        draw_line_DDA({55 , 100}, {100 , 25}, WHITE);
+        draw_line_DDA({15 , 25}, {100 , 25}, WHITE);
+         /* 
     for (int i = 0; i < 500; i++)
     {
         if (i > 400)
         {
             i = -700;
         }
-        car.DrawCar(i);
+       // car.DrawCar(i);
+      
         if (ismouseclick(WM_LBUTTONDOWN))
         {
             getmouseclick(WM_LBUTTONDOWN, xpos, ypos);
@@ -176,11 +184,12 @@ int main()
             //            floodfill(xpos,ypos,YELLOW);
             floodFill({xpos, ypos}, BLACK, YELLOW);
         };
+       
         delay(1000);
         swapbuffers();
         cleardevice();
     }
-
+ */
     getchar();
     return 0;
 }
