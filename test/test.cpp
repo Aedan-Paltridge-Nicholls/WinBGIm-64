@@ -1,10 +1,14 @@
 #include "graphics.h"
-
+#include <iostream>
+#include <string>
+#include <math.h>
+#include <ctime>
 int i, j = 0, gd = DETECT, gm;
-
+int rect,rect2,score=0;
 const int Width = 800;
 const int Height = 600;
-int g_offSet = 20;
+int g_offSet = 170;
+int g_offSet2 = 170;
 typedef int Radius;
 
 struct Point
@@ -22,33 +26,13 @@ struct Point
 template <typename A>
 Point convertPixel(A &x, A &y)
 {
+     x = -x;
+    x += Width - g_offSet2;
     //    x+=Width/2;
     y = -y;
     y += Height - g_offSet;
     return {x, y};
 }
-/*
-void drawAxis()
-{
-    for (int i = 0; i < Height; i++)
-    {
-        putpixel(Width / 2, i, WHITE);
-    }
-    for (int i = 0; i < Width; i++)
-    {
-        putpixel(i, Height, WHITE);
-    }
-}
-
-void drawAxis(int offSet)
-{
-    g_offSet = offSet;
-    for (int i = 0; i < Width; i++)
-    {
-        putpixel(i, Height - g_offSet - 20, WHITE);
-    }
-}
-*/
 void drawPixel(double x, double y, int color)
 {
     convertPixel(x, y);
@@ -65,7 +49,8 @@ void draw_line_DDA(Point a, Point b, int color)
 
     double Xinc = dx / steps;
     double Yinc = dy / steps;
-     drawPixel(x0, y0, color);
+   
+     
     for (int i = 0; i < steps; i++)
     {
         drawPixel(x0, y0, color);
@@ -73,123 +58,179 @@ void draw_line_DDA(Point a, Point b, int color)
         y0 += Yinc;
     }
 }
-/*
-void draw_circle_Bressenham(Point c, Radius r, int col)
+void triangle()
 {
-    double d = 3 - 2 * r;
-    double y = r, x = 0;
-    double h = c.x, k = c.y;
+    draw_line_DDA({1 , 20}, {150 , 300}, WHITE);
+    draw_line_DDA({150 , 300}, {300 , 20}, WHITE);
+    draw_line_DDA({1 , 20}, {300 , 20}, WHITE);
 
-    while (y >= x)
+}
+void square()
+{
+    draw_line_DDA({1 , 1}, {1 , 300}, WHITE);
+    draw_line_DDA({1 , 1}, {300 , 1}, WHITE);
+    draw_line_DDA({300 , 1}, {300 , 300}, WHITE);
+    draw_line_DDA({1 , 300}, {300 , 300}, WHITE);
+
+}
+void Rectangle(int rectHeight,int rectwidth)
+{
+    draw_line_DDA({1 , 1}, {1 , rectHeight}, WHITE);
+    draw_line_DDA({1 , 1}, {rectwidth , 1}, WHITE);
+    draw_line_DDA({rectwidth , 1}, {rectwidth , rectHeight}, WHITE);
+    draw_line_DDA({1 , rectHeight}, {rectwidth , rectHeight}, WHITE);
+
+}
+int MainMenu()
+{
+   //clearviewport( );
+    char MenuImp;
+    do
     {
-        drawPixel(h + x, k + y, col);
-        drawPixel(h + y, k + x, col);
-        drawPixel(h - x, k + y, col);
-        drawPixel(h - y, k + x, col);
-        drawPixel(h + x, k - y, col);
-        drawPixel(h + y, k - x, col);
-        drawPixel(h - x, k - y, col);
-        drawPixel(h - y, k - x, col);
-        x++;
-        if (d < 0)
+       MenuImp = (char) getch( );
+        outtextxy(20, 170, "Press {A} For Play");
+        outtextxy(20, 190, "Press {B} For Final Score");
+        outtextxy(20, 210, "Press {C} To Exit");
+        switch (MenuImp)
         {
-            d = d + 4 * x + 6;
-        }
-        else
-        {
-            d = d + 4 * x - 4 * y + 6;
-            y--;
-        }
-    }
-}
-
-void draw_circle(Point c, Radius r, int col)
-{
-    convertPixel(c.x, c.y);
-    int old_col = getcolor();
-    setcolor(col);
-    circle(c.x, c.y, r);
-    setcolor(old_col);
-}
-
-void floodFill(Point currPixel, int oldcolor, int fillColor)
-{
-    int tempx = currPixel.x, tempy = currPixel.y;
-    Point pixel = convertPixel(tempx, tempy);
-    int currColor = getpixel(pixel.x, pixel.y);
-    if (currColor != oldcolor)
-    {
-        return;
-    }
-    drawPixel(currPixel.x, currPixel.y, fillColor);
-
-    floodFill(Point(currPixel.x, currPixel.y + 1), oldcolor, fillColor);
-    floodFill(Point(currPixel.x, currPixel.y - 1), oldcolor, fillColor);
-    floodFill(Point(currPixel.x + 1, currPixel.y), oldcolor, fillColor);
-    floodFill(Point(currPixel.x - 1, currPixel.y), oldcolor, fillColor);
-}
-*/
-/*
-class Car
-{
- 
-public:
-    int x, y;
-    void DrawCar(double i)
-    {  
+            case 'a':
+            {
+              
+            }
+            break;
+            case 'b':
+            {
+                
+            }
+            break;
+            case 'c':
+            {
+                
+            }
+            break;
         
-        draw_line_DDA({15 + i, 25}, {25 + i, 75}, RED);
-        draw_line_DDA({25 + i, 75}, {35 + i, 25}, RED);
-        draw_line_DDA({15 + i, 25}, {35 + i, 25}, RED);
-       draw_line_DDA({41 + i, 40}, {41 + i, 80}, RED);
-       // draw_line_DDA({40 + i, 40}, {40 + i, 80}, YELLOW);
-        draw_line_DDA({40 + i, 40}, {80 + i, 40}, YELLOW);
-        draw_circle_Bressenham({80 + 20 + i, 40}, 20, YELLOW);
-        draw_line_DDA({110 + i, 40}, {120 + 100 + i, 40}, RED);
-        draw_circle_Bressenham({220 + 20 + i, 40}, 20, YELLOW);
-        draw_line_DDA({40 + i, 80}, {120 + i, 130}, YELLOW);
-        draw_line_DDA({120 + i, 130}, {240 + i, 130}, YELLOW);
-        draw_line_DDA({240 + i, 130}, {300 + i, 80}, YELLOW);
-        draw_line_DDA({300 + i, 80}, {340 + i, 80}, YELLOW);
-        draw_line_DDA({340 + i, 80}, {340 + i, 40}, YELLOW);
-        draw_line_DDA({260 + i, 40}, {340 + i, 40}, YELLOW);
-    }
-};
-*/
+        default:
+            break;
+        }
+
+
+    } while ( true);
+    
+
+}
+void CalculateScore()
+{
+ score += 10;
+ 
+ std::string output = "the score is : ";
+ std::string scoreImp = std::to_string(score); 
+ output.append(scoreImp);
+ std::string Str17 = output;
+ char *Fixer = new char[Str17.length()+1];
+  strcpy(Fixer,Str17.c_str());
+    outtextxy(20, 70,Fixer);
+    delete [] Fixer;
+   MainMenu();
+   // cleardevice();
+}
+
+void FinalScore()
+{
+
+
+}
 int main()
 {
-    initwindow(Width, Height);
-    /*
-    drawAxis(200);
-    drawAxis(250);
-*/
-   // Car car;
-    int xpos, ypos;
-    draw_line_DDA({15 , 25}, {55 , 100}, WHITE);
-        draw_line_DDA({55 , 100}, {100 , 25}, WHITE);
-        draw_line_DDA({15 , 25}, {100 , 25}, WHITE);
-         /* 
-    for (int i = 0; i < 500; i++)
+    srand(time(nullptr));
+    char c,Cs;
+    initwindow(Width,Height,"task5");
+    rect = rand() %300+1;
+    rect2 = rand() %300+1;
+    
+    int shape = rand()%4+1;
+    switch (shape)
     {
-        if (i > 400)
-        {
-            i = -700;
-        }
-       // car.DrawCar(i);
-      
-        if (ismouseclick(WM_LBUTTONDOWN))
-        {
-            getmouseclick(WM_LBUTTONDOWN, xpos, ypos);
-            //            setfillstyle(SOLID_FILL,RED);
-            //            floodfill(xpos,ypos,YELLOW);
-            floodFill({xpos, ypos}, BLACK, YELLOW);
-        };
-       
-        delay(1000);
-        swapbuffers();
-        cleardevice();
+        case 1:
+            {
+                triangle();
+                Cs ='b';
+            }
+            break;
+            case 2:
+            {
+                Rectangle(rect,rect2);
+                Cs ='a';
+            }
+            break;
+            case 3:
+            {
+             square();
+             Cs ='c';
+            }
+            break;
+            case 4:
+            {
+
+            }
+            break;
+            
+    
+     default:
+        break;
     }
- */
-    getchar();
-    return 0;
-}
+    
+    outtextxy(20, 130, "Identify the Shapes");
+    outtextxy(20, 150, "What Is the Current shape ?");
+    outtextxy(20, 170, "Press {A} if it is a Rectangle");
+    outtextxy(20, 190, "Press {B} if it is a Triangle");
+    outtextxy(20, 210, "Press {C} if it is a Square");
+    outtextxy(20, 230, "Press {D} if it is None of the above");
+    do
+    {
+        c = (char) getch( );
+        if (c == Cs )
+        {
+            std::cout << "vitory " << (int) c << std::endl;
+            CalculateScore();
+        } 
+  else
+  {   // Process one of the special keys:
+    c = (char) getch( );
+    switch (c)
+    {
+        case KEY_HOME:    std::cout << "Home key."   << std::endl; break;
+        case KEY_UP: std::cout << "Up key."     << std::endl; break;
+        case KEY_PGUP:    std::cout << "PgUp key."   << std::endl; break;
+        case KEY_LEFT:    std::cout << "Left key."   << std::endl; break;
+        case KEY_CENTER:  std::cout << "Center key." << std::endl; break;
+        case KEY_RIGHT:   std::cout << "Right key."  << std::endl; break;
+        case KEY_END:     std::cout << "End key."    << std::endl; break;
+        case KEY_DOWN:    std::cout << "Down key."   << std::endl; break;
+        case KEY_PGDN:    std::cout << "PgDn key."   << std::endl; break;
+        case KEY_INSERT:  std::cout << "Insert key." << std::endl; break;
+        case KEY_DELETE:  std::cout << "Delete key." << std::endl; break;
+        case KEY_F1:std::cout << "F1 key."     << std::endl; break;
+        case KEY_F2:std::cout << "F2 key."     << std::endl; break;
+        case KEY_F3:std::cout << "F3 key."     << std::endl; break;
+        case KEY_F4:std::cout << "F4 key."     << std::endl; break;
+        case KEY_F5:std::cout << "F5 key."     << std::endl; break;
+        case KEY_F6:std::cout << "F6 key."     << std::endl; break;
+        case KEY_F7:std::cout << "F7 key."     << std::endl; break;
+        case KEY_F8:std::cout << "F8 key."     << std::endl; break;
+        case KEY_F9:std::cout << "F9 key."     << std::endl; break;
+        default: std::cout << "Unknown extended key." << std::endl;
+    }
+    }
+        }   while ((c != 'x') && (c != 'X'));
+
+
+
+        
+    
+        
+
+        getchar();
+        
+        return 0;
+    }
+
