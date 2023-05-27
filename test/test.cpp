@@ -134,25 +134,30 @@ class Car
 public:
     int x, y;
     void DrawCar(double i)
-    {
-        draw_line_DDA({40 + i, 40}, {40 + i, 80}, YELLOW);
+    {   
+        draw_line_DDA({15 + i, 25}, {25 + i, 75}, RED);
+        draw_line_DDA({25 + i, 75}, {35 + i, 25}, RED);
+        draw_line_DDA({15 + i, 25}, {35 + i, 25}, RED);
+        
+       /* draw_line_DDA({41 + i, 40}, {41 + i, 80}, RED);
+       // draw_line_DDA({40 + i, 40}, {40 + i, 80}, YELLOW);
         draw_line_DDA({40 + i, 40}, {80 + i, 40}, YELLOW);
         draw_circle_Bressenham({80 + 20 + i, 40}, 20, YELLOW);
-        draw_line_DDA({120 + i, 40}, {120 + 100 + i, 40}, YELLOW);
+        draw_line_DDA({110 + i, 40}, {120 + 100 + i, 40}, RED);
         draw_circle_Bressenham({220 + 20 + i, 40}, 20, YELLOW);
         draw_line_DDA({40 + i, 80}, {120 + i, 130}, YELLOW);
         draw_line_DDA({120 + i, 130}, {240 + i, 130}, YELLOW);
         draw_line_DDA({240 + i, 130}, {300 + i, 80}, YELLOW);
         draw_line_DDA({300 + i, 80}, {340 + i, 80}, YELLOW);
         draw_line_DDA({340 + i, 80}, {340 + i, 40}, YELLOW);
-        draw_line_DDA({260 + i, 40}, {340 + i, 40}, YELLOW);
+        draw_line_DDA({260 + i, 40}, {340 + i, 40}, YELLOW);*/
     }
 };
 
 int main()
 {
     initwindow(Width, Height);
-    drawAxis(400);
+    drawAxis(200);
     drawAxis(250);
 
     Car car;
