@@ -88,71 +88,170 @@ void Rectangle(int rectHeight,int rectwidth)
        fill((rectwidth-5),(rectHeight -5),WHITE);
 }
 
-void testhelp(int *hell,int runs)
-{
-    
-      std::string output = "the points are : ";
-      output.append("{ ");
-    for (int r = 0; r < runs; r++)
-    {
-        std::string Imp = std::to_string(hell[r]); 
-        output.append(Imp);
-        output.append(", ");
-    }
-    output.append("} ");
-    std::string Str7 = output;
-    char *Fixer = new char[Str7.length()+1];
-    strcpy(Fixer,Str7.c_str());
-    outtext(Fixer);
-
-}
 void Other()
 {
-     int shape = rand()%4+1;
-    
-    int dotnum;
-    int random = rand()%15+5;
-    if (random %2 !=0){random++;}
-    dotnum = random*2;
-    int dots[dotnum];
-    for (int d = 0; d < dotnum; d++)
-    {   
-      int  randpoint = rand() %300+25;
-      randpoint = -randpoint;
-      if (d %2 != 0){ randpoint+= Width - g_offSet2;}
-      else{ randpoint+= Height - g_offSet;}
-       dots[d]= randpoint;
-       if (d == dotnum-1)
-       {dots[d] = dots[0];}
-        if (d == dotnum)
-       {dots[d] = dots[1];}
+    srand(time(nullptr)); 
+    int shapeimp = rand()%5+1,size;
+    switch (shapeimp)
+    {
+         case 1:
+            {
+             int  otherShape[]={200,0, 105,69, 141,181 ,259,181, 295,69, 200,0};
+
+                for (int s = 1; s <= 12; s++)
+                {
+                    if (s%2 ==0)
+                    {
+                        otherShape[(s-1)] = -otherShape[(s-1)] ;
+                        otherShape[(s-1)] +=Height -g_offSet2 ;
+                       
+                    }
+                    else
+                    {
+                        otherShape[(s-1)] = -otherShape[(s-1)] ;
+                        otherShape[(s-1)] +=Width -g_offSet  ;
+                       
+                    }
+                    
+                }
+                
+             drawpoly(6,otherShape);
+            }
+            break;
+         case 2:
+            {       
+              int  otherShape[]={200,50, 83,106, 54,233, 135,335, 265,335, 346,233, 317,106, 200,50};
+
+                for (int s = 1; s <= 16; s++)
+                {
+                    if (s%2 ==0)
+                    {
+                        otherShape[(s-1)] = -otherShape[(s-1)] ;
+                        otherShape[(s-1)] +=Height -g_offSet2 ;
+                       
+                    }
+                    else
+                    {
+                        otherShape[(s-1)] = -otherShape[(s-1)] ;
+                        otherShape[(s-1)] +=Width -g_offSet ;
+                       
+                    }
+                    
+                }
+                
+             drawpoly(8,otherShape);
+            }
+            break;
+             case 3:
+            {
+             int  otherShape[]={131,5, 69,5, 19,41, 0,100, 19,159, 69,195, 131,195, 181,159, 200,100, 181,41 ,131,5};
+
+                for (int s = 1; s <= 22; s++)
+                {
+                    if (s%2 ==0)
+                    {
+                        otherShape[(s-1)] = -otherShape[(s-1)] ;
+                        otherShape[(s-1)] +=Height -g_offSet2 ;
+                       
+                    }
+                    else
+                    {
+                        otherShape[(s-1)] = -otherShape[(s-1)] ;
+                        otherShape[(s-1)] +=Width -g_offSet ;
+                       
+                    }
+                    
+                }
+                
+             drawpoly(11,otherShape);
+            }
+            
+            break;
+             case 4:
+            {
+             int  otherShape[]={100,0, 13,150, 187,150, 100,0};
+              int  otherShape2[]={100,200, 187,50, 13,50, 100,200};
+                for (int s = 1; s <= 8; s++)
+                {
+                    if (s%2 ==0)
+                    {
+                        otherShape[(s-1)] = -otherShape[(s-1)] ;
+                        otherShape[(s-1)] +=Height -g_offSet2 ;
+
+                       otherShape2[(s-1)] = -otherShape2[(s-1)] ;
+                        otherShape2[(s-1)] +=Height -g_offSet2 ;
+                    }
+                    else
+                    {
+                        otherShape[(s-1)] = -otherShape[(s-1)] ;
+                        otherShape[(s-1)] +=Width -g_offSet ;
+                        
+                         otherShape2[(s-1)] = -otherShape2[(s-1)] ;
+                        otherShape2[(s-1)] +=Width -g_offSet ;
+                       
+                    }
+                    
+                }
+                 drawpoly(4,otherShape);
+             drawpoly(4,otherShape2);
+            }
+            
+            break;
+             case 5:
+            {
+                int  otherShape2[]={105,69, 295,69, 200,0, 105,69};
+                int  otherShape3[]={141,181, 200,0, 295,69, 141,181};
+                int  otherShape4[]={259,181, 295,69, 200,0, 259,181};
+                int  otherShape5[]={105,69, 141,181, 259,181, 105,69};
+                for (int s = 1; s <= 8; s++)
+                {
+                    if (s%2 ==0)
+                    {
+                        otherShape5[(s-1)] = -otherShape5[(s-1)] ;
+                        otherShape5[(s-1)] +=Height -g_offSet2 ;
+
+                        otherShape4[(s-1)] = -otherShape4[(s-1)] ;
+                        otherShape4[(s-1)] +=Height -g_offSet2 ;
+
+                        otherShape3[(s-1)] = -otherShape3[(s-1)] ;
+                        otherShape3[(s-1)] +=Height -g_offSet2 ;
+
+                        otherShape2[(s-1)] = -otherShape2[(s-1)] ;
+                        otherShape2[(s-1)] +=Height -g_offSet2 ;
+                    }
+                    else
+                    {
+                        otherShape5[(s-1)] = -otherShape5[(s-1)] ;
+                        otherShape5[(s-1)] +=Width -g_offSet ;
+
+                        otherShape4[(s-1)] = -otherShape4[(s-1)] ;
+                        otherShape4[(s-1)] +=Width -g_offSet ;
+
+                        otherShape3[(s-1)] = -otherShape3[(s-1)] ;
+                        otherShape3[(s-1)] +=Width -g_offSet ;
+                        
+                        otherShape2[(s-1)] = -otherShape2[(s-1)] ;
+                        otherShape2[(s-1)] +=Width -g_offSet ;
+                       
+                    }
+                    
+                }
+             drawpoly(4,otherShape2);
+             drawpoly(4,otherShape3);
+             drawpoly(4,otherShape4);
+             drawpoly(4,otherShape5);
+            }
+            break;
+     default:
+        break;
     }
-    std::string scoreImp = std::to_string(random); 
-    std::string output = "the random is : ";
-     output.append(scoreImp);
-    std::string Str7 = output;
-    char *Fixer = new char[Str7.length()+1];
-    strcpy(Fixer,Str7.c_str());
-    outtextxy(20,120,Fixer);
-    int dotsets = dotnum/2;
-    testhelp(dots,dotnum);
-    drawpoly(dotsets,dots);
-    
+   
 }
-void Othertest()
-{
-    for (int l = 0; l < 10; l++)
-    { 
-        Other();
-         delay(100000);
-      clearviewport( );
-    }
-}
+
 int MainMenu()
 {
     void FinalScore();
     int main();
-   triangle();
     char MenuImp;
     do
     {
@@ -165,7 +264,7 @@ int MainMenu()
         {
             case 'a':
             {
-              return 0;
+             main();
             }
             break;
             case 'b':
@@ -179,14 +278,14 @@ int MainMenu()
             }
             break;
         
-        default:
+            default:
             break;
         }
 
 
     } while ( true);
     
-  
+  leave:return 0;
 }
 void CalculateScore()
 {
@@ -220,17 +319,16 @@ void FinalScore()
    MainMenu();
 }
 int main()
-{  
+{
  
     srand(time(nullptr));
     char c,Cs;
     initwindow(Width,Height,"task5");
-    Other();
-    Othertest();
+      clearviewport( );
     rect = rand() %300+25;
     rect2 = rand() %300+25;
     
-    int shape = rand()%4+1;
+    int shape =   4;//rand()%4+1;
     switch (shape)
     {
         case 1:
