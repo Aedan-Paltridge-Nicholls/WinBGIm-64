@@ -3,6 +3,7 @@
 #include <string>
 #include <math.h>
 #include <ctime>
+#include <stdio.h>
 int i, j = 0, gd = DETECT, gm;
 int rect,rect2,score=0;
 const int Width = 800;
@@ -39,6 +40,11 @@ void drawPixel(double x, double y, int color)
     putpixel(x, y, color);
 }
 
+void fill(double x, double y, int color)
+{
+    convertPixel(x, y);
+    floodfill(x,y,color);
+}
 void draw_line_DDA(Point a, Point b, int color)
 {
     double x0 = a.x, y0 = a.y, x1 = b.x, y1 = b.y;
@@ -63,7 +69,7 @@ void triangle()
     draw_line_DDA({1 , 20}, {150 , 300}, WHITE);
     draw_line_DDA({150 , 300}, {300 , 20}, WHITE);
     draw_line_DDA({1 , 20}, {300 , 20}, WHITE);
-
+    fill(50,50,WHITE);
 }
 void square()
 {
@@ -71,7 +77,7 @@ void square()
     draw_line_DDA({1 , 1}, {300 , 1}, WHITE);
     draw_line_DDA({300 , 1}, {300 , 300}, WHITE);
     draw_line_DDA({1 , 300}, {300 , 300}, WHITE);
-
+   fill(50,50,WHITE);
 }
 void Rectangle(int rectHeight,int rectwidth)
 {
@@ -79,33 +85,97 @@ void Rectangle(int rectHeight,int rectwidth)
     draw_line_DDA({1 , 1}, {rectwidth , 1}, WHITE);
     draw_line_DDA({rectwidth , 1}, {rectwidth , rectHeight}, WHITE);
     draw_line_DDA({1 , rectHeight}, {rectwidth , rectHeight}, WHITE);
+       fill((rectwidth-5),(rectHeight -5),WHITE);
+}
 
+void testhelp(int *hell,int runs)
+{
+    
+      std::string output = "the points are : ";
+      output.append("{ ");
+    for (int r = 0; r < runs; r++)
+    {
+        std::string Imp = std::to_string(hell[r]); 
+        output.append(Imp);
+        output.append(", ");
+    }
+    output.append("} ");
+    std::string Str7 = output;
+    char *Fixer = new char[Str7.length()+1];
+    strcpy(Fixer,Str7.c_str());
+    outtext(Fixer);
+
+}
+void Other()
+{
+     int shape = rand()%4+1;
+    
+    int dotnum;
+    int random = rand()%15+5;
+    if (random %2 !=0){random++;}
+    dotnum = random*2;
+    int dots[dotnum];
+    for (int d = 0; d < dotnum; d++)
+    {   
+      int  randpoint = rand() %300+25;
+      randpoint = -randpoint;
+      if (d %2 != 0){ randpoint+= Width - g_offSet2;}
+      else{ randpoint+= Height - g_offSet;}
+       dots[d]= randpoint;
+       if (d == dotnum-1)
+       {dots[d] = dots[0];}
+        if (d == dotnum)
+       {dots[d] = dots[1];}
+    }
+    std::string scoreImp = std::to_string(random); 
+    std::string output = "the random is : ";
+     output.append(scoreImp);
+    std::string Str7 = output;
+    char *Fixer = new char[Str7.length()+1];
+    strcpy(Fixer,Str7.c_str());
+    outtextxy(20,120,Fixer);
+    int dotsets = dotnum/2;
+    testhelp(dots,dotnum);
+    drawpoly(dotsets,dots);
+    
+}
+void Othertest()
+{
+    for (int l = 0; l < 10; l++)
+    { 
+        Other();
+         delay(100000);
+      clearviewport( );
+    }
 }
 int MainMenu()
 {
-   //clearviewport( );
+    void FinalScore();
+    int main();
+   triangle();
     char MenuImp;
     do
     {
-       MenuImp = (char) getch( );
         outtextxy(20, 170, "Press {A} For Play");
         outtextxy(20, 190, "Press {B} For Final Score");
         outtextxy(20, 210, "Press {C} To Exit");
+       MenuImp = (char) getch( );
+        
         switch (MenuImp)
         {
             case 'a':
             {
-              
+              return 0;
             }
             break;
             case 'b':
             {
-                
+                FinalScore();
             }
             break;
             case 'c':
             {
-                
+                exit(0);
             }
             break;
         
@@ -116,12 +186,13 @@ int MainMenu()
 
     } while ( true);
     
-
+  
 }
 void CalculateScore()
 {
  score += 10;
- 
+
+ clearviewport( );
  std::string output = "the score is : ";
  std::string scoreImp = std::to_string(score); 
  output.append(scoreImp);
@@ -129,23 +200,35 @@ void CalculateScore()
  char *Fixer = new char[Str17.length()+1];
   strcpy(Fixer,Str17.c_str());
     outtextxy(20, 70,Fixer);
+     delay(1000);
     delete [] Fixer;
+     clearviewport( );
    MainMenu();
-   // cleardevice();
+  
 }
-
 void FinalScore()
 {
-
-
+    clearviewport( );
+ std::string output = "the score is : ";
+ std::string scoreImp = std::to_string(score); 
+ output.append(scoreImp);
+ std::string Str7 = output;
+ char *Fixer = new char[Str7.length()+1];
+  strcpy(Fixer,Str7.c_str());
+    outtextxy(20, 70,Fixer);
+    delete [] Fixer;
+   MainMenu();
 }
 int main()
-{
+{  
+ 
     srand(time(nullptr));
     char c,Cs;
     initwindow(Width,Height,"task5");
-    rect = rand() %300+1;
-    rect2 = rand() %300+1;
+    Other();
+    Othertest();
+    rect = rand() %300+25;
+    rect2 = rand() %300+25;
     
     int shape = rand()%4+1;
     switch (shape)
@@ -160,6 +243,7 @@ int main()
             {
                 Rectangle(rect,rect2);
                 Cs ='a';
+               
             }
             break;
             case 3:
@@ -170,7 +254,8 @@ int main()
             break;
             case 4:
             {
-
+                Other();
+                Cs ='d';
             }
             break;
             
@@ -190,47 +275,20 @@ int main()
         c = (char) getch( );
         if (c == Cs )
         {
+
             std::cout << "vitory " << (int) c << std::endl;
+            c=0,Cs=0;
             CalculateScore();
         } 
-  else
-  {   // Process one of the special keys:
-    c = (char) getch( );
-    switch (c)
-    {
-        case KEY_HOME:    std::cout << "Home key."   << std::endl; break;
-        case KEY_UP: std::cout << "Up key."     << std::endl; break;
-        case KEY_PGUP:    std::cout << "PgUp key."   << std::endl; break;
-        case KEY_LEFT:    std::cout << "Left key."   << std::endl; break;
-        case KEY_CENTER:  std::cout << "Center key." << std::endl; break;
-        case KEY_RIGHT:   std::cout << "Right key."  << std::endl; break;
-        case KEY_END:     std::cout << "End key."    << std::endl; break;
-        case KEY_DOWN:    std::cout << "Down key."   << std::endl; break;
-        case KEY_PGDN:    std::cout << "PgDn key."   << std::endl; break;
-        case KEY_INSERT:  std::cout << "Insert key." << std::endl; break;
-        case KEY_DELETE:  std::cout << "Delete key." << std::endl; break;
-        case KEY_F1:std::cout << "F1 key."     << std::endl; break;
-        case KEY_F2:std::cout << "F2 key."     << std::endl; break;
-        case KEY_F3:std::cout << "F3 key."     << std::endl; break;
-        case KEY_F4:std::cout << "F4 key."     << std::endl; break;
-        case KEY_F5:std::cout << "F5 key."     << std::endl; break;
-        case KEY_F6:std::cout << "F6 key."     << std::endl; break;
-        case KEY_F7:std::cout << "F7 key."     << std::endl; break;
-        case KEY_F8:std::cout << "F8 key."     << std::endl; break;
-        case KEY_F9:std::cout << "F9 key."     << std::endl; break;
-        default: std::cout << "Unknown extended key." << std::endl;
-    }
-    }
-        }   while ((c != 'x') && (c != 'X'));
-
-
-
-        
+            else
+            {   clearviewport( );
+            outtextxy(20, 130, "Identify the Shapes");
+            outtextxy(20, 150, "INCORECT SHAPE try again");
+            main();
+            }
+    }   while ((c != 'x') && (c != 'X'));
+    getchar();
     
-        
-
-        getchar();
-        
-        return 0;
-    }
+    return 0;
+}
 
